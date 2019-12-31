@@ -24,35 +24,25 @@ namespace ConsoleApp20
 
                     };
 
-            var criticalNodes =GetCriticalNodes(links, numLinks1, numRouters1);
+            //  var criticalNodes =GetCriticalNodes(links, numLinks1, numRouters1);
 
             var twoDi = new int[,]
             {
                 {0,1,1,0,1 },
                 {0,1,0,1,0 },
-                {0,0,0,0,1 },
+                {0,1,0,0,1 },
                 {0,1,0,0,0 }
             };
 
-            /*   { 1,1,1,1,1}
-             *   { 1,1,1,1,1}
-             *   { 0,1,0,1,1}
-             *   { 0,0,0,0,1}
-             */
-
-
-            /* {1,1,1,1,1}
-             * {1,1,1,1,1}
-             * {1,1,1,1,1}
-             * {
-             * 
-             */
-
-
-
             var minhourCode = MinHoursCode(4, 5, twoDi);
 
+
+
             var minhours = MinHours(twoDi);
+
+        
+
+
 
             var r = minimumHours(4, 5, twoDi);
 
@@ -77,7 +67,7 @@ namespace ConsoleApp20
             var missing = MissingNumber(new int[] { 9, 6, 4, 2, 3, 5, 7, 0, 1 });
             var single1 = SingleNumber1(new int[] { 1, 2, 1, 3, 2, 5 });
             var single = SingleNumber(new int[] { 2, 2, 3, 2 });
-           // var maxprofit = MaxProfit(new int[] {1, 2, 3, 4, 5 });
+            // var maxprofit = MaxProfit(new int[] {1, 2, 3, 4, 5 });
             var palidram = IsPalindrome("A man, a plan, a canal: Panama");
             var pascal1 = GetRow(3);
             var pascal = Generate(5);
@@ -111,14 +101,17 @@ namespace ConsoleApp20
                 int ch = int.Parse(Console.ReadLine());
                 switch (ch)
                 {
-                    case 1: Console.WriteLine("Enter Roman Number");
+                    case 1:
+                        Console.WriteLine("Enter Roman Number");
                         var roman = Console.ReadLine();
                         var resultFromRoman = RomanToInt(roman);
                         Console.WriteLine(resultFromRoman);
                         break;
-                    case 2: Environment.Exit(0);
+                    case 2:
+                        Environment.Exit(0);
                         break;
-                    default: Console.WriteLine("Enter Correct Option");
+                    default:
+                        Console.WriteLine("Enter Correct Option");
                         break;
 
                 }
@@ -128,17 +121,18 @@ namespace ConsoleApp20
         private static List<int> GetCriticalNodes(int[][] links, int numLinks, int numRouters)
         {
             time = 0;
-            var map = new Dictionary<int, HashSet<int>>();
+            var map = new Dictionary<int, List<int>>();
+
             for (int i = 0; i < numRouters; i++)
             {
-                map.Add(i, new HashSet<int>());
+                map.Add(i, new List<int>());
             }
             foreach (var link in links)
             {
                 map[link[0]].Add(link[1]);
                 map[link[1]].Add(link[0]);
             }
-            var set = new HashSet<int>();
+            var set = new List<int>();
             var low = new int[numRouters];
             var ids = new int[numRouters];
             var parent = new int[numRouters];
@@ -157,16 +151,16 @@ namespace ConsoleApp20
                 if (ids[i] == -1)
                     DFS(map, low, ids, parent, i, set);
             }
-            return set.ToList();
+            return set;
         }
 
-        public static void DFS(Dictionary<int, HashSet<int>> map, int[] low, int[] ids, int[] parent, int cur, HashSet<int> res)
+        public static void DFS(Dictionary<int, List<int>> map, int[] low, int[] ids, int[] parent, int cur, List<int> res)
         {
             int children = 0;
 
             ids[cur] = low[cur] = ++time;
 
-            foreach(int nei in map[cur])
+            foreach (int nei in map[cur])
             {
                 if (ids[nei] == -1)
                 {
@@ -181,6 +175,72 @@ namespace ConsoleApp20
                     low[cur] = Math.Min(low[cur], ids[nei]);
             }
         }
+        public static int NumIslands(char[][] grid)
+        {
+            if (grid == null || grid.Length == 0) return 0;
+
+            int m = grid.Length;
+            int n = grid[0].Length;
+
+            int count = 0;
+
+            bool[,] visited = new bool[m, n];
+
+            List<int[]> dirs = new List<int[]>()
+                                {
+                                    new int[] {1, 0}, new int[] {-1, 0}, new int[] {0, 1}, new int[] {0, -1}
+                                };
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (grid[i][j] == '1' && !visited[i, j])
+                    {
+                        BFS(grid, visited, i, j, dirs);
+                        ++count;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        public static void BFS(char[][] grid, bool[,] visited, int i, int j, List<int[]> dirs)
+        {
+            var m = grid.Length;
+            var n = grid[0].Length;
+
+            var path = new Queue<Point>();
+
+            path.Enqueue(new Point(i, j));
+
+            while (path.Count != 0)
+            {
+                var head = path.Dequeue();
+
+                foreach (var dir in dirs)
+                {
+                    int xx = head.X + dir[0];
+                    int yy = head.Y + dir[1];
+                    if (xx < 0 || xx >= m || yy < 0 || yy >= n || grid[xx][yy] == '0' || visited[xx, yy]) continue;
+                    path.Enqueue(new Point(xx, yy));
+                    visited[xx, yy] = true;
+                }
+            }
+        }
+
+        public class Point
+        {
+            public int X { get; }
+            public int Y { get; }
+            public Point(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
         public static uint ReverseBits(uint n)
         {
             var binary = string.Concat(Convert.ToString(n, 2).Reverse());
@@ -189,11 +249,11 @@ namespace ConsoleApp20
         public static void Rotate(int[] nums, int k)
         {
             int[] a = new int[nums.Length];
-            for(int i=0;i<nums.Length;i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 a[(i + k) % nums.Length] = nums[i];
             }
-            for(int i=0;i<nums.Length;i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 nums[i] = a[i];
             }
@@ -201,7 +261,7 @@ namespace ConsoleApp20
         public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
         {
             var dict = new Dictionary<ListNode, int>();
-            while(headA!=null)
+            while (headA != null)
             {
                 dict[headA] = headA.val;
                 headA = headA.next;
@@ -235,7 +295,7 @@ namespace ConsoleApp20
         {
             var stringCharArray = s.ToArray();
             int result = 0;
-            foreach(var item in stringCharArray)
+            foreach (var item in stringCharArray)
             {
                 var r = Math.Abs('A' - item) + 1;
                 result = result * 26 + r;
@@ -245,20 +305,20 @@ namespace ConsoleApp20
         public static int MajorityElement(int[] nums)
         {
             if (nums.Any() == false) return 0;
-            var majority = nums.Length/2;
+            var majority = nums.Length / 2;
             return nums.GroupBy(x => x).Where(x => x.Count() > majority).Select(x => x.Key).FirstOrDefault();
         }
         public static string ConvertToTitle(int n)
         {
             if (n <= 0) return string.Empty;
             var list = new List<char>();
-            while(true)
+            while (true)
             {
                 n--;
                 var div = n / 26;
                 var rem = n % 26;
-                list.Add((char) ('A' + rem));
-                if(div==0)
+                list.Add((char)('A' + rem));
+                if (div == 0)
                 {
                     break;
                 }
@@ -284,7 +344,7 @@ namespace ConsoleApp20
                 }
                 else
                 {
-                    return new int[] { i+1, j+1 };
+                    return new int[] { i + 1, j + 1 };
 
                 }
             }
@@ -293,23 +353,23 @@ namespace ConsoleApp20
         public string[] FindRestaurant(string[] list1, string[] list2)
         {
             var result = new List<string>();
-            foreach(var item in list1)
+            foreach (var item in list1)
             {
                 if (list2.Contains(item))
                 {
                     result.Add(item);
                 }
             }
-            return result.ToArray() ;
+            return result.ToArray();
         }
         public class MinStack
         {
             private Stack<int> _stack = new Stack<int>();
-            public MinStack(){}
-            public void Push(int x){ _stack.Push(x);}
-            public void Pop() { _stack.Pop();}
-            public int Top(){ return _stack.Peek();}
-            public int GetMin(){ return _stack.Min();}
+            public MinStack() { }
+            public void Push(int x) { _stack.Push(x); }
+            public void Pop() { _stack.Pop(); }
+            public int Top() { return _stack.Peek(); }
+            public int GetMin() { return _stack.Min(); }
         }
         public bool HasPathSum(TreeNode root, int sum)
         {
@@ -375,7 +435,7 @@ namespace ConsoleApp20
                 {0,1,0,0,0 }
             };
             */
- 
+
         public static IList<IList<int>> Generate(int numRows)
         {
             var db = new int[numRows, numRows];
@@ -465,7 +525,7 @@ namespace ConsoleApp20
         public static bool IsPalindrome(string s)
         {
             if (string.IsNullOrEmpty(s)) return true;
-            s = System.Text.RegularExpressions.Regex.Replace(s, @"[^0-9a-zA-Z]+", "").ToLower() ;
+            s = System.Text.RegularExpressions.Regex.Replace(s, @"[^0-9a-zA-Z]+", "").ToLower();
             int j = s.Length - 1;
             for (int i = 0; i < s.Length / 2; i++)
             {
@@ -480,9 +540,9 @@ namespace ConsoleApp20
         {
             var max = 0;
             var min = prices[0];
-            for (int i = 1; i < prices.Length ; i++)
+            for (int i = 1; i < prices.Length; i++)
             {
-               if(min<prices[i])
+                if (min < prices[i])
                 {
                     min = prices[i];
                 }
@@ -516,7 +576,7 @@ namespace ConsoleApp20
             int find = -1;
             for (int i = 0; i < nums.Length; i++)
             {
-                if (i < nums.Length - 2 && nums[i] == nums[i + 1] && nums[i + 1]==nums[i+2])
+                if (i < nums.Length - 2 && nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2])
                 {
                     i += 2;
                 }
@@ -524,7 +584,7 @@ namespace ConsoleApp20
                 {
                     find = i;
                 }
-                    
+
             }
             return find >= 0 ? nums[find] : 0;
         }
@@ -620,7 +680,7 @@ namespace ConsoleApp20
         }
         public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
         {
-            if (root == null){ return new List<IList<int>>();}
+            if (root == null) { return new List<IList<int>>(); }
             var queue = new Queue<TreeNode>();
             var item = new List<int>();
             var result = new List<IList<int>>();
@@ -631,7 +691,7 @@ namespace ConsoleApp20
                 var temp = queue.Dequeue();
                 if (temp == null)
                 {
-                    if (queue.Any()){queue.Enqueue(null);}
+                    if (queue.Any()) { queue.Enqueue(null); }
                     result.Add(item);
                     item = new List<int>();
                     continue;
@@ -679,7 +739,7 @@ namespace ConsoleApp20
                     {
                         queue.Enqueue(null);
                     }
-                   
+
                     result.Add(item);
                     item = new List<int>();
                     continue;
@@ -803,10 +863,10 @@ namespace ConsoleApp20
 
         public static TreeNode SortedArrayToBST(int[] nums)
         {
-            if (nums.Length == 0)return null;
-            if (nums.Length == 1)return new TreeNode(nums[0]);
+            if (nums.Length == 0) return null;
+            if (nums.Length == 1) return new TreeNode(nums[0]);
             var root = new TreeNode(nums[nums.Length / 2]);
-            root.left = SortedArrayToBST(nums.Take(nums.Length/2).ToArray());
+            root.left = SortedArrayToBST(nums.Take(nums.Length / 2).ToArray());
             root.right = SortedArrayToBST(nums.Skip((nums.Length / 2) + 1).Take(nums.Length).ToArray());
             return root;
         }
@@ -838,7 +898,7 @@ namespace ConsoleApp20
             return root;
         }
 
-       
+
         public static void AddNewNode(ref TreeNode root, int? data)
         {
             TreeNode newNode;
@@ -884,7 +944,7 @@ namespace ConsoleApp20
                 }
             }
         }
-        
+
 
         public static IList<IList<int>> LevelOrderBottom(TreeNode root)
         {
@@ -922,7 +982,7 @@ namespace ConsoleApp20
                     }
                 }
 
-        
+
             }
             var r = result.ToArray().Reverse().ToList();
             return r;
@@ -930,7 +990,7 @@ namespace ConsoleApp20
         }
         public bool IsSymmetric(TreeNode root)
         {
-           return IsMirror(root, root);
+            return IsMirror(root, root);
 
         }
         public int MaxDepth(TreeNode root)
@@ -943,7 +1003,7 @@ namespace ConsoleApp20
             if (p == null && q == null) return true;
             if (p == null || q == null) return false;
             return p.val == q.val && IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
-          
+
         }
         public bool IsMirror(TreeNode p, TreeNode q)
         {
@@ -961,18 +1021,18 @@ namespace ConsoleApp20
             q1.Enqueue(p);
             q2.Enqueue(q);
 
-            while(q1.Any() && q2.Any())
+            while (q1.Any() && q2.Any())
             {
                 var temp1 = q1.Dequeue();
                 var temp2 = q2.Dequeue();
                 if (temp1.val != temp2.val) return false;
 
-               if(temp1.left!=null && temp2.left!=null)
+                if (temp1.left != null && temp2.left != null)
                 {
                     q1.Enqueue(temp1.left);
                     q2.Enqueue(temp2.left);
                 }
-               else if(temp1.left !=null || temp2.left!=null)
+                else if (temp1.left != null || temp2.left != null)
                 {
                     return false;
                 }
@@ -1035,7 +1095,7 @@ namespace ConsoleApp20
                 cur = cur.next;
             }
             return head;
-        
+
         }
         public static int MySqrt(int x)
         {
@@ -1116,7 +1176,7 @@ namespace ConsoleApp20
         public static bool IsValid(string s)
         {
             if (string.IsNullOrEmpty(s)) return true;
-             if(s.Length % 2 != 0) return false;
+            if (s.Length % 2 != 0) return false;
 
             var charArray = s.ToCharArray();
             var stack = new Stack<char>();
@@ -1138,7 +1198,7 @@ namespace ConsoleApp20
                         {
                             stack.Pop();
                         }
-                        else{ return false;}
+                        else { return false; }
                         break;
                 }
 
@@ -1191,7 +1251,7 @@ namespace ConsoleApp20
             return gcd(b % a, a);
         }
 
-      
+
         public static int[] cellCompete(int[] states, int days)
         {
             int n = states.Length;
@@ -1212,7 +1272,7 @@ namespace ConsoleApp20
         }
 
 
-       
+
 
         public int orangesRotting(int[][] grid)
         {
@@ -1250,7 +1310,7 @@ namespace ConsoleApp20
 
             foreach (var row in grid)
             {
-                foreach(var item in row)
+                foreach (var item in row)
                 {
                     if (item == 1)
                         return -1;
@@ -1261,8 +1321,8 @@ namespace ConsoleApp20
 
         }
 
-       static int[] dr = new int[] { -1, 0, 1, 0 };
-       static int[] dc = new int[] { 0, -1, 0, 1 };
+        static int[] dr = new int[] { -1, 0, 1, 0 };
+        static int[] dc = new int[] { 0, -1, 0, 1 };
         public static int minimumHours(int rows, int columns, int[,] grid)
         {
             var queue = new Queue<int>();
@@ -1377,12 +1437,14 @@ namespace ConsoleApp20
              time += 1
 
          return time */
+
+
+
         public static int MinHoursCode(int rows, int columns, int[,] grid)
         {
             if (rows == 0 || columns == 0) return 0;
 
             var q = new List<int[]>();
-            var newArray = new List<int[]>();
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -1394,46 +1456,34 @@ namespace ConsoleApp20
                 }
             }
 
-            var directions = new int[,]{{ 1, 0},{-1,0},{ 0,1},{ 0,-1}};
-            int time = 0;
-
-            while(true)
+            var directions = new List<int[]>{ new int[] { 1, 0 },  new int[] {-1, 0 }, new int[] { 0, 1 }, new int[] { 0,-1 }};
+            var time = 0;
+           
+            while (true)
             {
-                for (int i = 0; i < q.Count; i++)
+                var newResult = new List<int[]>();
+                foreach (var item in q)
                 {
-                    for (int j = 0; j < q[i].Count(); j++)
+                    foreach (var d in directions)
                     {
-                        for (int d = 0; d < 4; d++)
+                        var ni = item[0] + d[0];
+                        var nj = item[1] + d[1];
+                        if (0 <= ni && ni < rows && 0 <= nj && nj < columns && grid[ni, nj] == 0)
                         {
-                            var ni = i + directions[d, 0];
-                            var nj = j + directions[d, 1];
-                            if (0 <= ni && ni < rows && 0 <= nj && nj < columns && grid[ni, nj] == 0)
-                            {
-                                grid[ni, nj] = 1;
-                                newArray.Add(new int[] { ni, nj });
-                            }
-
+                            grid[ni, nj] = 1;
+                            newResult.Add(new int[] { ni, nj });
                         }
-
                     }
                 }
-                q = newArray;
-
+                q = newResult;
                 if (q.Any() == false) break;
                 time += 1;
             }
             return time;
         }
 
-        public class Point
-        {
-           public int r, c;
-           public Point(int r, int c)
-            {
-                this.r = r;
-                this.c = c;
-            }
-        }
+
+
 
         public bool IsIsomorphic(string s, string t)
         {
@@ -1489,7 +1539,7 @@ namespace ConsoleApp20
                 {
                     return new int[] { dict[target - nums[i]], i };
                 }
-                dict[nums[i]]= i;
+                dict[nums[i]] = i;
             }
             return null;
         }
@@ -1524,7 +1574,7 @@ namespace ConsoleApp20
         }
 
 
-       
+
         public static IList<IList<int>> FourSum(int[] nums, int target)
         {
             var result = new List<IList<int>>();
@@ -1597,7 +1647,7 @@ namespace ConsoleApp20
                 {
                     nums[unique++] = nums[i++];
                 }
-                else {i++;}
+                else { i++; }
             }
             return unique;
         }
@@ -1605,7 +1655,7 @@ namespace ConsoleApp20
         {
             int i = 0;
             int unique = 0;
-            while(nums.Length>i)
+            while (nums.Length > i)
             {
                 if (nums[i] != val)
                 {
@@ -1678,7 +1728,7 @@ namespace ConsoleApp20
                 arrayItem.Sort();
                 ListNode listNode = null;
                 ListNode temp = null;
-                foreach(var item in arrayItem)
+                foreach (var item in arrayItem)
                 {
                     var newNode = new ListNode(item)
                     {
@@ -1692,7 +1742,7 @@ namespace ConsoleApp20
                     {
                         temp.next = newNode;
                         temp = newNode;
-                    }  
+                    }
                 }
                 return listNode;
             }
