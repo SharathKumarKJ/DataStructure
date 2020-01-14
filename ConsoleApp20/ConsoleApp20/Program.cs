@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,119 @@ namespace ConsoleApp20
     {
         static void Main(string[] args)
         {
+
+            var solveCharArray = new char[][]
+            {
+                 new char[]{ 'X', 'X', 'X', 'X'},
+                 new char[]{ 'X', 'O' ,'O' ,'X' },
+                new char[]{ 'X', 'X', 'O' ,'X' },
+                new char[]{ 'X', 'O','X', 'X' }
+            };
+
+            Solve(solveCharArray);
+
+
+            var treasureIslandArray2 = new char[][]
+         {
+                new char[]{'S', 'O', 'O', 'S', 'S' },
+                new char[] {'D', 'O', 'D', 'O', 'D' },
+                new char[]{'O', 'O', 'O', 'O', 'X' },
+                new char[]{'X', 'D', 'D', 'O', 'O' },
+                new char[] {'X', 'D', 'D', 'D', 'O' }
+
+
+         };
+
+            var treasureIsland2 = TreasureIsland2(treasureIslandArray2);
+
+            var chardi = new char[][]
+           {
+                new char[]  {'1','1','0','0','0' },
+                new char[]  {'1','1','0','0','0' },
+                new char[]  {'0','0','1','0','0' },
+                new char[]  {'0','0','0','1','1' },
+
+           };
+
+            var numberIsland = NumIslands(chardi);
+
+            var treasureIslandArray = new char[][]
+           {
+                new char[]  {'o','o','o','o' },
+                new char[]  {'D','o','D','o' },
+                new char[]  {'x','o','o','o' },
+                new char[]  {'o','D','D','0', },
+
+           };
+
+            var treasureIsland = TreasureIsland(treasureIslandArray);
+
+            var mincostconnectRopes = MinCostToConnectRopes(new int[] { 1, 2, 5, 10, 35, 89 });
+
+            var targetFound = OptimalUtilization(new List<List<int>>
+            {
+                new List<int> {1,8 },
+                new List<int>{2,15},
+                new List<int>{3,9},
+
+            }, new List<List<int>>
+            {
+                new List<int>{1,8},
+                new List<int>{2,11},
+                new List<int>{3,12},
+            }, 20);
+
+
+            // a = [[1, 8], [2, 15], [3, 9]]
+            // b = [[1, 8], [2, 11], [3, 12]]
+
+            var logs = new string[] { "dig1 8 1 5 1", "let1 art can", "dig2 3 6", "let2 own kit dig", "let3 art zero" };
+
+            ReorderLogFiles(logs);
+
+            var generatedNumber = GenerateNumbers(3);
+
+            var quotes = new string[] {
+                                        "Elmo is the hottest of the season! Elmo will be on every kid's wishlist!",
+                                        "The new Elmo dolls are super high quality",
+                                        "Expect the Elsa dolls to be very popular this year, Elsa!",
+                                        "Elsa and Elmo are the toys I'll be buying for my kids, Elsa is good",
+                                        "For parents of older kids, look into buying them a drone",
+                                        "Warcraft is slowly rising in popularity ahead of the holiday season"
+                                        };
+
+            var popularToys = NPopularToys(6, 2, new string[] { "elmo", "elsa", "legos", "drone", "tablet", "warcraft" }, 6, quotes);
+
+
+
+            var twoDi = new int[,]
+              {
+                    {0,1,1,0,1 },
+                    {0,1,0,1,0 },
+                    {0,1,0,0,1 },
+                    {0,1,0,0,0 }
+              };
+
+            var minhourCode = MinHours(4, 5, twoDi);
+
+            var reverseString = ReverseWords("the sky is blue");
+
+            WordsInVertical("HEY HOWDY");
+            /*HH
+             *EO 
+             *YW
+             * 
+             * YDWOH YEH
+             * 
+             * */
+            var largestNumber = LargestNumber(new int[] { 3, 30, 34, 5, 9 });
+
+            var suggestedWords = SuggestedProducts1(new string[] { "mobile", "mouse", "moneypot", "monitor", "mousepad" }, "mouse");
+            NextLargerElement(new int[] { 1, 3, 2, 4 });
+
+
             var numRouters1 = 7;
             var numLinks1 = 7;
-
             var links = new int[][]
                     {
                         new int[] { 0, 1 },
@@ -23,39 +134,12 @@ namespace ConsoleApp20
                         new int[] { 3, 4 },
 
                     };
+            var criticalNodes = GetCriticalNodes(links, numLinks1, numRouters1);
 
-            //  var criticalNodes =GetCriticalNodes(links, numLinks1, numRouters1);
-
-            var twoDi = new int[,]
-            {
-                {0,1,1,0,1 },
-                {0,1,0,1,0 },
-                {0,1,0,0,1 },
-                {0,1,0,0,0 }
-            };
-
-            var minhourCode = MinHoursCode(4, 5, twoDi);
-
-
-
-            var minhours = MinHours(twoDi);
-
-        
-
-
-
-            var r = minimumHours(4, 5, twoDi);
 
             var possible = new List<string> { "storage", "battery", "hover", "alex", "waterproof", "solar" };
-            var r45 = new List<string> { "i am sharath battery", "manikanda alex", "bhartah battery", "jda alex", "waterproof good" };
-
-            var popular = popularNFeatures(6
-                , 2
-                , possible
-                , 7
-                , r45
-                );
-
+            var r45 = new List<string> { "i am sharath battery", "manikanda alex", "bharath battery", "jda alex", "waterproof good" };
+            var popular = popularNFeatures(6, 2, possible, 7, r45);
             var countPrime = CountPrimes(10);
             var reverseBits = ReverseBits(43261596);
             Rotate(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 3);
@@ -88,7 +172,6 @@ namespace ConsoleApp20
             var binary = AddBinary("11", "1");
             var lastworkCount = LengthOfLastWord("  ");
             var maxsubarr = MaxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
-
             var inser = SearchInsert(new int[] { 1, 3, 5, 6 }, 2);
             var uni = RemoveElement(new int[] { 0, 1, 2, 2, 3, 0, 4, 2 }, 2);
             var remove = RemoveDuplicates(new int[] { 1, 1, 2 });
@@ -117,20 +200,544 @@ namespace ConsoleApp20
                 }
             }
         }
+
+        public int[][] UpdateMatrix(int[][] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix[0].GetLength(0);
+            bool[,] visited = new bool[rows, columns];
+            var q = new List<int[]>();
+            var dirs = new List<int[]>()
+                    {
+                        new int[] {1, 0},
+                        new int[] {-1, 0},
+                        new int[] {0, 1},
+                        new int[] {0, -1}
+                    };
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i][j] == 0)
+                    {
+                        q.Add(new int[] { i, j });
+                        visited[i, j] = true;
+                    }
+                }
+            }
+            while (true)
+            {
+                var result = new List<int[]>();
+                foreach (var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+                        int i = item[0] + dir[0];
+                        int j = item[1]+ dir[1];
+                        if (i < 0 || i >= rows || j < 0 || j >= columns || visited[i, j])
+                        {
+                            continue;
+                        }
+                        matrix[i][j] = matrix[item[0]][item[1]] + 1;
+                        visited[i, j] = true;
+                        result.Add(new int[] { i, j });
+                    }
+                }
+                q = result;
+                if (q.Any() == false) break;
+            }
+
+            return matrix;
+        }
+    
+    public static List<List<int>> OptimalUtilization(List<List<int>> a, List<List<int>> b, int target)
+        {
+            if (a.Any() == false || b.Any() == false) return new List<List<int>>();
+
+            var dict = new Dictionary<int, List<List<int>>>();
+
+            foreach (var itemA in a)
+            {
+                foreach (var itemB in b)
+                {
+                    var sum = itemA[1] + itemB[1];
+                    if (sum <= target)
+                    {
+                        if (dict.ContainsKey(sum))
+                        {
+                            dict[sum].Add(new List<int> { itemA[0], itemB[0] });
+                        }
+                        else
+                        {
+                            dict.Add(sum, new List<List<int>>() { new List<int> { itemA[0], itemB[0] } });
+                        }
+                    }
+                }
+            }
+
+           if(dict.Any())
+            {
+                return dict.OrderByDescending(x => x.Key).Select(x => x.Value).FirstOrDefault();
+            }
+            return new List<List<int>>();
+           
+        }
+        public static void Solve(char[][] board)
+        {
+            if (board == null || board.Length == 0) return; 
+            int rows = board.Length;
+            int columns = board[0].Length;
+     
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (board[i][j] == 'O')
+                    {
+
+                        DFSForSurrend(board, rows, columns, i, j);
+                    }
+                }
+            }
+        }
+
+        private static void DFSForSurrend(char[][] grid, int m, int n, int i, int j)
+        {
+            if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 'X') return;
+            grid[i][j] = 'X';
+            DFSForSurrend(grid, m, n, i + 1, j);
+            DFSForSurrend(grid, m, n, i - 1, j);
+            DFSForSurrend(grid, m, n, i, j + 1);
+            DFSForSurrend(grid, m, n, i, j - 1);
+        }
+
+        public static int NumIslands(char[][] grid)
+        {
+            if (grid == null || grid.Length == 0) return 0;
+            int rows = grid.Length;
+            int columns = grid[0].Length;
+            int res = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (grid[i][j] == '1')
+                    {
+                      
+                       
+                         DFS(grid, rows, columns, i, j);
+                        res += 1;
+                    }
+                }
+            }
+
+            return res;
+           
+        }
+        private static void DFS(char[][] grid, int m, int n, int i, int j)
+        {
+            if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') return;
+            grid[i][j] = '0';
+            DFS(grid, m, n, i + 1, j);
+            DFS(grid, m, n, i - 1, j);
+            DFS(grid, m, n, i, j + 1);
+            DFS(grid, m, n, i, j - 1);
+        }
+
+        public static int MinHours(int rows, int columns, int[,] grid)
+        {
+            if (rows == 0 || columns == 0) return 0;
+
+            var q = new List<int[]>();
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (grid[i, j] == 1)
+                    {
+                        q.Add(new int[] { i, j });
+                    }
+                }
+            }
+            var directions = new List<int[]> { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            var time = 0;
+
+            while (true)
+            {
+                var newResult = new List<int[]>();
+                foreach (var item in q)
+                {
+                    foreach (var d in directions)
+                    {
+                        var ni = item[0] + d[0];
+                        var nj = item[1] + d[1];
+                        if (0 <= ni && ni < rows && 0 <= nj && nj < columns && grid[ni, nj] == 0)
+                        {
+                            grid[ni, nj] = 1;
+                            newResult.Add(new int[] { ni, nj });
+                        }
+                    }
+                }
+                q = newResult;
+                if (q.Any() == false) break;
+                time += 1;
+            }
+            return time;
+        }
+
+
+        public static int TreasureIsland2(char[][] island)
+        {
+            int rows = island.Length;
+            int columns = island[0].Length;
+
+            var q = new List<int[]>();
+
+            for(int i=0;i<rows;i++)
+            {
+                for(int j=0;j<columns;j++)
+                {
+                    if(island[i][j]=='S')
+                    {
+                        q.Add(new int[] { i, j });
+                        island[i][j] = 'D';
+                    }
+                }
+            }
+           
+            var dirs = new List<int[]> { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+
+            while (true)
+            {
+                var result = new List<int[]>();
+                foreach (var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+                        var m = item[0] + dir[0];
+                        var n = item[1] + dir[1];
+
+                        if (0 <= m && m < columns && 0 <= n && n < rows)
+                        {
+                            if (island[m][n] == 'X')
+                            {
+                                time += 1;
+                                return time;
+                            }
+                            if (island[m][n] != 'D')
+                            {
+                                island[m][n] = 'D';
+                                result.Add(new int[] { m, n });
+                            }
+                        }
+
+                    }
+
+                }
+
+                q = result;
+                if (q.Any() == false) return time;
+                time += 1;
+
+            }
+        }
+        public static int TreasureIsland(char[][] island)
+        {
+            int rows = island.Length;
+            int columns = island[0].Length;
+
+            var q = new List<int[]>
+            {
+                new int[] { 0, 0 }
+            };
+            var time = 1;
+            island[0][0] = 'D';
+
+            var dirs = new List<int[]> { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+
+            while (true)
+            {
+                var result = new List<int[]>();
+                foreach (var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+                        var m = item[0] + dir[0];
+                        var n = item[1] + dir[1];
+
+                        if (0 <= m && m < columns && 0 <= n && n < rows)
+                        {
+                            if (island[m][n] == 'x')
+                            {
+                                time += 1;
+                                return time;
+                            }
+                            if (island[m][n] != 'D')
+                            {
+                                island[m][n] = 'D';
+                                result.Add(new int[] { m, n });
+                            }
+                        }
+
+                    }
+                  
+                }
+
+                q = result;
+                if (q.Any() == false) return time;
+                time += 1;
+
+            }
+        }
+
+        public static int MinCostToConnectRopes(int[] ropes)
+        {
+
+            var listItems = new List<int>(ropes);
+            int i = 0;
+            int sum = 0;
+            while (i <= ropes.Length / 2)
+            {
+                var r = listItems.OrderBy(x => x).Skip(i * 2).Take(2).Sum();
+                listItems.Add(r);
+                sum += r;
+                i += 1;
+            }
+
+
+            return sum;
+           
+        }
+
+
+        public static string[] ReorderLogFiles(string[] logs)
+        {
+
+            if (logs.Length == 0) return logs;
+
+            return logs.Where(x => !x.Split(' ')[1].All(char.IsDigit))
+                       .OrderBy(x => x.Substring(x.IndexOf(" ") + 1))
+                       .ThenBy(x=>x.Substring(0,x.IndexOf(" ")))
+                       .Union(logs.Where(x => x.Split(' ')[1].All(char.IsDigit))).ToArray();
+
+
+        }
+    
+    public static List<int> GenerateNumbers(int numRows)
+        {
+            ++numRows;
+            var db = new int[numRows, numRows];
+            var item = new List<int>();
+            var result = new List<List<int>>();
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    if (i == j || j == 0)
+                    {
+                        db[i, j] = 1;
+                        item.Add(1);
+                    }
+                    else 
+                    {
+                        db[i, j] = db[i - 1, j - 1] + db[i - 1, j];
+                        item.Add(db[i, j]);
+                    }
+                }
+                result.Add(item);
+                item = new List<int>();
+               
+            }
+
+            return result[numRows - 1];
+        }
+
+
+
+        public static List<string> NPopularToys(int numToys, int topToys, string[] toys, int numQuotes, string[] quotes)
+        {
+
+            var dictionary = new Dictionary<string, int>();
+
+            foreach (var quote in quotes)
+            {
+                foreach (var toy in toys)
+                {
+
+                    if (quote.ToLower().Contains(toy.ToLower()))
+                    {
+
+                        if (dictionary.ContainsKey(toy))
+                        {
+                            dictionary[toy]++;
+                        }
+                        else
+                        {
+                            dictionary.Add(toy, 1);
+                        }
+                    }
+                }
+            }
+
+            return dictionary.OrderByDescending(x => x.Value).Take(topToys).Select(x => x.Key).ToList();
+        }
+
+
+
+       
+
+        public static string ReverseWords(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+           return string.Join(" ", s.Trim().Split(" ".ToCharArray(),StringSplitOptions.RemoveEmptyEntries).Reverse());
+
+
+        }
+        public static List<string> WordsInVertical(string str)
+        {
+            var splitStr = str.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            int maxLength = 0;
+            foreach (var item in splitStr)
+            {
+                if (item.Length > maxLength)
+                {
+                    maxLength = item.Length;
+
+                }
+            }
+
+            var result = new List<string>();
+            var strItem = string.Empty;
+            for (int i = 0; i < maxLength; i++)
+            {
+                for (int j = 0; j < splitStr.Length; j++)
+                {
+
+                    strItem += splitStr[j].Length > i ? splitStr[j].Substring(i, 1) : " ";
+                }
+                result.Add(strItem);
+                strItem = string.Empty;
+            }
+            return result;
+        }
+        public static string LargestNumber(int[] nums)
+        {
+            if (nums.Any() == false) return string.Empty;
+
+            if (nums.Count() == 1) return nums[0].ToString();
+
+            var stringArray = nums.Select(x => x.ToString()).ToArray();
+
+            Array.Sort(stringArray, (string s1, string s2) =>
+            {
+                var str1 = s1 + s2;
+                var str2 = s2 + s1;
+                return str2.CompareTo(str1);
+            });
+
+            if(stringArray[0].Equals("0"))
+            {
+                return "0";
+            }
+            return string.Join("", stringArray);
+        }
+        public static IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
+        {
+            if (string.IsNullOrEmpty(searchWord) || products.Any() == false) return new List<IList<string>>();
+
+            var dictionary = new Dictionary<string, SortedSet<string>>();
+
+            foreach (var item in products)
+            {
+                for (int i = 0; i < item.Length; i++)
+                {
+                    var subStr = item.Substring(0, i + 1);
+
+                    if (dictionary.ContainsKey(subStr) == false)
+                    {
+                        dictionary.Add(subStr, new SortedSet<string>());
+                    }
+                    dictionary[subStr].Add(item);
+                }
+            }
+
+            var result = new List<IList<string>>();
+            for (int i = 0; i < searchWord.Length; i++)
+            {
+                var subStr = searchWord.Substring(0, i + 1);
+
+                if (dictionary.ContainsKey(subStr))
+                {
+                    result.Add(dictionary[subStr].Take(3).ToList());
+                }
+                else
+                {
+                    result.Add(new List<string>());
+                }
+            }
+
+            return result;
+        }
+
+        public static IList<IList<string>> SuggestedProducts1(string[] products, string searchWord)
+        {
+            if (string.IsNullOrEmpty(searchWord) || products.Any() == false) return new List<IList<string>>();
+
+            Array.Sort(products);
+            var result = new List<IList<string>>();
+            for (int i = 0; i < searchWord.Length; i++)
+            {
+                var subStr = searchWord.Substring(0, i + 1);
+
+                if(products.Any(x=>x.Contains(subStr)))
+                {
+                    result.Add(products.Where(x => x.Contains(subStr)).Take(3).ToList());
+                   
+                }
+                else
+                {
+                    result.Add(new List<string>());
+                }
+            }
+
+            return result;
+        }
+
+        private static void NextLargerElement(int[] nums)
+        {
+            bool flag = false;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                flag = false;
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (nums[j] > nums[i])
+                    {
+                        flag = true;
+                        Console.WriteLine(nums[j]);
+                        break;
+                    }
+                }
+                if (flag == false) Console.WriteLine("-1");
+            }
+        }
         static int time = 0;
         private static List<int> GetCriticalNodes(int[][] links, int numLinks, int numRouters)
         {
             time = 0;
-            var map = new Dictionary<int, List<int>>();
+            var dictionary = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < numRouters; i++)
             {
-                map.Add(i, new List<int>());
+                dictionary.Add(i, new List<int>());
             }
             foreach (var link in links)
             {
-                map[link[0]].Add(link[1]);
-                map[link[1]].Add(link[0]);
+                dictionary[link[0]].Add(link[1]);
+                dictionary[link[1]].Add(link[0]);
             }
             var set = new List<int>();
             var low = new int[numRouters];
@@ -149,24 +756,23 @@ namespace ConsoleApp20
             for (int i = 0; i < numRouters; i++)
             {
                 if (ids[i] == -1)
-                    DFS(map, low, ids, parent, i, set);
+                    DFS(dictionary, low, ids, parent, i, set);
             }
             return set;
         }
-
-        public static void DFS(Dictionary<int, List<int>> map, int[] low, int[] ids, int[] parent, int cur, List<int> res)
+        public static void DFS(Dictionary<int, List<int>> dictionary, int[] low, int[] ids, int[] parent, int cur, List<int> res)
         {
             int children = 0;
 
             ids[cur] = low[cur] = ++time;
 
-            foreach (int nei in map[cur])
+            foreach (int nei in dictionary[cur])
             {
                 if (ids[nei] == -1)
                 {
                     children++;
                     parent[nei] = cur;
-                    DFS(map, low, ids, parent, nei, res);
+                    DFS(dictionary, low, ids, parent, nei, res);
                     low[cur] = Math.Min(low[cur], low[nei]);
                     if ((parent[cur] == -1 && children > 1) || (parent[cur] != -1 && low[nei] >= ids[cur]))
                         res.Add(cur);
@@ -175,71 +781,10 @@ namespace ConsoleApp20
                     low[cur] = Math.Min(low[cur], ids[nei]);
             }
         }
-        public static int NumIslands(char[][] grid)
-        {
-            if (grid == null || grid.Length == 0) return 0;
 
-            int m = grid.Length;
-            int n = grid[0].Length;
 
-            int count = 0;
 
-            bool[,] visited = new bool[m, n];
-
-            List<int[]> dirs = new List<int[]>()
-                                {
-                                    new int[] {1, 0}, new int[] {-1, 0}, new int[] {0, 1}, new int[] {0, -1}
-                                };
-
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (grid[i][j] == '1' && !visited[i, j])
-                    {
-                        BFS(grid, visited, i, j, dirs);
-                        ++count;
-                    }
-                }
-            }
-
-            return count;
-        }
-
-        public static void BFS(char[][] grid, bool[,] visited, int i, int j, List<int[]> dirs)
-        {
-            var m = grid.Length;
-            var n = grid[0].Length;
-
-            var path = new Queue<Point>();
-
-            path.Enqueue(new Point(i, j));
-
-            while (path.Count != 0)
-            {
-                var head = path.Dequeue();
-
-                foreach (var dir in dirs)
-                {
-                    int xx = head.X + dir[0];
-                    int yy = head.Y + dir[1];
-                    if (xx < 0 || xx >= m || yy < 0 || yy >= n || grid[xx][yy] == '0' || visited[xx, yy]) continue;
-                    path.Enqueue(new Point(xx, yy));
-                    visited[xx, yy] = true;
-                }
-            }
-        }
-
-        public class Point
-        {
-            public int X { get; }
-            public int Y { get; }
-            public Point(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-        }
+       
 
         public static uint ReverseBits(uint n)
         {
@@ -426,16 +971,10 @@ namespace ConsoleApp20
             return resultSet.Take(topFeatures).Select(x => x.Key).ToList();
 
         }
+            
 
-        /*  var twoDi = new int[,]
-            {
-                {0,1,1,0,1 },
-                {0,1,0,1,0 },
-                {0,0,0,0,1 },
-                {0,1,0,0,0 }
-            };
-            */
 
+       
         public static IList<IList<int>> Generate(int numRows)
         {
             var db = new int[numRows, numRows];
@@ -1011,7 +1550,6 @@ namespace ConsoleApp20
             if (p == null || q == null) return false;
             return p.val == q.val && IsSameTree(p.left, q.right) && IsSameTree(p.right, q.left);
         }
-
         public bool IsSameTreeWIthIte(TreeNode p, TreeNode q)
         {
             if (p == null && q == null) return true;
@@ -1119,7 +1657,6 @@ namespace ConsoleApp20
             newArray[0] = 1;
             return newArray;
         }
-
         public static int LengthOfLastWord(string s)
         {
             s = s.TrimEnd();
@@ -1141,16 +1678,15 @@ namespace ConsoleApp20
         public static int RomanToInt(string s)
         {
             var dict = new Dictionary<char, int>() {
-                { 'I', 1 },
-                {'V',5 },
-                {'X',10 },
-                {'L',50 },
-                {'C',100 },
-                {'D',500 },
-                {'M',1000 },
+                {'I',1},
+                {'V',5},
+                {'X',10},
+                {'L',50},
+                {'C',100},
+                {'D',500},
+                {'M',1000},
 
             };
-
             var value = 0;
             var result = 0;
             for (int i = 0; i < s.Length; i++)
@@ -1171,8 +1707,6 @@ namespace ConsoleApp20
             return result;
 
         }
-
-
         public static bool IsValid(string s)
         {
             if (string.IsNullOrEmpty(s)) return true;
@@ -1206,7 +1740,6 @@ namespace ConsoleApp20
 
             return stack.Any() ? false : true;
         }
-
         public static int CountPrimes(int n)
         {
             bool[] isPrime = new bool[n];
@@ -1229,7 +1762,6 @@ namespace ConsoleApp20
             }
             return count;
         }
-
         public int generalizedGCD(int num, int[] arr)
         {
             int result = arr[0];
@@ -1244,14 +1776,11 @@ namespace ConsoleApp20
             }
             return result;
         }
-
         int gcd(int a, int b)
         {
             if (a == 0) return b;
             return gcd(b % a, a);
         }
-
-
         public static int[] cellCompete(int[] states, int days)
         {
             int n = states.Length;
@@ -1270,221 +1799,7 @@ namespace ConsoleApp20
             }
             return states;
         }
-
-
-
-
-        public int orangesRotting(int[][] grid)
-        {
-            int R = grid.Length, C = grid[0].Length;
-            Queue<int> queue = new Queue<int>();
-            Dictionary<int, int> depth = new Dictionary<int, int>();
-            for (int r = 0; r < R; ++r)
-                for (int c = 0; c < C; ++c)
-                    if (grid[r][c] == 2)
-                    {
-                        int code = r * C + c;
-                        queue.Enqueue(code);
-                        depth.Add(code, 0);
-                    }
-
-            int ans = 0;
-            while (queue.Any())
-            {
-                int code = queue.Dequeue();
-                int r = code / C, c = code % C;
-                for (int k = 0; k < 4; ++k)
-                {
-                    int nr = r + dr[k];
-                    int nc = c + dc[k];
-                    if (0 <= nr && nr < R && 0 <= nc && nc < C && grid[nr][nc] == 1)
-                    {
-                        grid[nr][nc] = 2;
-                        int ncode = nr * C + nc;
-                        queue.Enqueue(ncode);
-                        depth.Add(ncode, depth[code] + 1);
-                        ans = depth[ncode];
-                    }
-                }
-            }
-
-            foreach (var row in grid)
-            {
-                foreach (var item in row)
-                {
-                    if (item == 1)
-                        return -1;
-                }
-
-            }
-            return ans;
-
-        }
-
-        static int[] dr = new int[] { -1, 0, 1, 0 };
-        static int[] dc = new int[] { 0, -1, 0, 1 };
-        public static int minimumHours(int rows, int columns, int[,] grid)
-        {
-            var queue = new Queue<int>();
-            var depth = new Dictionary<int, int>();
-            for (int r = 0; r < rows; ++r)
-                for (int c = 0; c < columns; ++c)
-                    if (grid[r, c] == 1)
-                    {
-                        int code = r * columns + c;
-                        queue.Enqueue(code);
-                        depth.Add(code, 0);
-                    }
-
-            int ans = 0;
-            while (queue.Any())
-            {
-                int code = queue.Dequeue();
-                int r = code / columns;
-                int c = code % columns;
-                for (int k = 0; k < 4; ++k)
-                {
-                    int nr = r + dr[k];
-                    int nc = c + dc[k];
-                    if (0 <= nr && nr < rows && 0 <= nc && nc < columns && grid[nr, nc] == 1)
-                    {
-                        grid[nr, nc] = 2;
-                        int ncode = nr * columns + nc;
-                        queue.Enqueue(ncode);
-                        depth.Add(ncode, depth[code] + 1);
-                        ans = depth[ncode];
-                    }
-                }
-            }
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (grid[i, j] == 1) return -1;
-                }
-            }
-            return ans;
-        }
-        public static int MinHours(int[,] grid)
-        {
-            var rows = grid.GetLength(0);
-            var cols = grid.GetLength(1);
-            var filesInServer = new List<int[]>();
-            int numDays = 0;
-
-            int[,] dirs = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (grid[i, j] == 1)
-                    {
-                        filesInServer.Add(new int[] { i, j });
-                    }
-                }
-            }
-            while (filesInServer.Count != grid.Length)
-            {
-                numDays = 1;
-                for (int i = 0; i < filesInServer.Count; i++)
-                {
-                    int gridRow = 0, gridCol = 0;
-                    for (int j = 0; j < 4; j++)
-                    {
-                        gridRow = filesInServer[i][0] + dirs[j, 0];
-                        gridCol = filesInServer[i][1] + dirs[j, 1];
-                        if (gridRow >= 0 && gridRow < rows && gridCol >= 0 && gridCol < cols)
-                        {
-                            if (grid[gridRow, gridCol] == 0)
-                            {
-                                grid[gridRow, gridCol] = 1;
-                                filesInServer.Add(new int[] { gridRow, gridCol });
-                            }
-
-                        }
-                    }
-
-                }
-                numDays++;
-
-            }
-
-            return numDays;
-        }
-
-
-        /* def minHour(self, rows, columns, grid):
-         if not rows or not columns:
-             return 0
-
-         q = [[i, j] for i in range(rows) for j in range(columns) if grid[i][j]==1]
-         directions = [[1,0],[-1,0],[0,1],[0,-1]]
-         time = 0
-
-         while True:
-             new = []
-             for [i, j] in q:
-                 for d in directions:
-                     ni, nj = i + d[0], j + d[1]
-                     if 0 <= ni<rows and 0 <= nj<columns and grid[ni][nj] == 0:
-                         grid[ni][nj] = 1
-                         new.append([ni, nj])
-             q = new
-             if not q:
-                 break
-             time += 1
-
-         return time */
-
-
-
-        public static int MinHoursCode(int rows, int columns, int[,] grid)
-        {
-            if (rows == 0 || columns == 0) return 0;
-
-            var q = new List<int[]>();
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (grid[i, j] == 1)
-                    {
-                        q.Add(new int[] { i, j });
-                    }
-                }
-            }
-
-            var directions = new List<int[]>{ new int[] { 1, 0 },  new int[] {-1, 0 }, new int[] { 0, 1 }, new int[] { 0,-1 }};
-            var time = 0;
-           
-            while (true)
-            {
-                var newResult = new List<int[]>();
-                foreach (var item in q)
-                {
-                    foreach (var d in directions)
-                    {
-                        var ni = item[0] + d[0];
-                        var nj = item[1] + d[1];
-                        if (0 <= ni && ni < rows && 0 <= nj && nj < columns && grid[ni, nj] == 0)
-                        {
-                            grid[ni, nj] = 1;
-                            newResult.Add(new int[] { ni, nj });
-                        }
-                    }
-                }
-                q = newResult;
-                if (q.Any() == false) break;
-                time += 1;
-            }
-            return time;
-        }
-
-
-
-
+       
         public bool IsIsomorphic(string s, string t)
         {
             if (s.Length != t.Length) return false;
@@ -1543,7 +1858,6 @@ namespace ConsoleApp20
             }
             return null;
         }
-
         public static IList<IList<int>> ThreeSum(int[] nums)
         {
             var result = new List<IList<int>>();
@@ -1572,9 +1886,6 @@ namespace ConsoleApp20
             }
             return result;
         }
-
-
-
         public static IList<IList<int>> FourSum(int[] nums, int target)
         {
             var result = new List<IList<int>>();
@@ -1614,7 +1925,6 @@ namespace ConsoleApp20
             }
             return result;
         }
-
         public static long Reverse(int x)
         {
             long result = 0;
@@ -1626,7 +1936,6 @@ namespace ConsoleApp20
             return (int)result;
 
         }
-
         public static int MyAtoi(string str)
         {
             var result = str.Trim().Split(' ');
@@ -1636,7 +1945,6 @@ namespace ConsoleApp20
             else if (intResult > int.MaxValue) return int.MaxValue;
             return intResult;
         }
-
         public static int RemoveDuplicates(int[] nums)
         {
             int i = 1;
@@ -1695,7 +2003,16 @@ namespace ConsoleApp20
             public ListNode(int x) { val = x; }
         }
 
-
+        public class Point
+        {
+            public int X { get; }
+            public int Y { get; }
+            public Point(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
         public class TreeNode
         {
             public int val;
