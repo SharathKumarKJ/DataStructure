@@ -10,6 +10,51 @@ namespace ConsoleApp20
     {
         static void Main(string[] args)
         {
+            var cutTrees = new List<IList<int>>
+            {
+                new List<int>{54581641,64080174,24346381,69107959},
+                new List<int>{86374198,61363882,68783324,79706116},
+                new List<int>{668150,92178815,89819108,94701471},
+                new List<int>{83920491,22724204,46281641,47531096 },
+                new List<int>{89078499,18904913,25462145,60813308 },
+
+
+            };
+            var cutTree = CutOffTree(cutTrees);
+
+            var topkFreguent = TopKFrequent(new string[] { "i", "love", "leetcode", "i", "love", "coding" }, 2);
+            var linkedListRoot = new ListNode(1);
+            
+            foreach (var item in new int[]  { 2, 3,4 })
+            {
+                AddNodes(linkedListRoot, item);
+            }
+
+            SplitListToParts(linkedListRoot, 5);
+            TreeNode root = null;
+            AddNewNode(ref root, 3);
+            AddNewNode(ref root, 9);
+            AddNewNode(ref root, 20);
+            AddNewNode(ref root, 1);
+            AddNewNode(ref root, 45);
+            AddNewNode(ref root, 15);
+            AddNewNode(ref root, 7);
+
+           var verticalTraversal= VerticalTraversal(root);
+
+            var partition1 = PartitionLabels1("ababcbacadefegdehijhklij");
+            var partition = PartitionLabels("ababcbacadefegdehijhklij");
+            var arrivalTime = new int[] { 900, 940, 950, 1100, 1500, 1800 };
+            var departureTime = new int[] { 910, 1200, 1120, 1130, 1900, 2000 };
+
+            var platForm = FindPlatform(arrivalTime, departureTime, arrivalTime.Length);
+
+            var maxWith2Trans = MaxProfitMost2Tras(new int[] { 3, 3, 5, 0, 0, 3, 1, 4 });
+            var maxprwithCoolTime = MaxProfitWithCoolTime(new int[] { 1, 2, 3, 0, 2 });
+
+            var maxpr = MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
+
+            var topKFrequent = TopKFrequent(new int[] { 1, 1, 1, 2, 2, 3 }, 2);
 
             var solveCharArray = new char[][]
             {
@@ -158,14 +203,7 @@ namespace ConsoleApp20
             Console.ReadLine();
             var treeBST = SortedArrayToBST(new int[] { -10, -3, 0, 5, 9 });
             //Given binary tree [3,9,20,null,null,15,7],
-            TreeNode root = null;
-            AddNewNode(ref root, 3);
-            AddNewNode(ref root, 9);
-            AddNewNode(ref root, 20);
-            AddNewNode(ref root, 1);
-            AddNewNode(ref root, 45);
-            AddNewNode(ref root, 15);
-            AddNewNode(ref root, 7);
+          
             var lelev = LevelOrderBottom(root);
             var starir = ClimbStairs(5);
             var sqr = MySqrt(8);
@@ -201,6 +239,277 @@ namespace ConsoleApp20
             }
         }
 
+        public static void AddNodes(ListNode root, int val)
+        {
+            if (root == null)
+            {
+                root = new ListNode(val);
+                return;
+            }
+
+            var temp = root;
+
+            while (temp.next != null)
+            {
+                temp = temp.next;
+            }
+            temp.next = new ListNode(val);
+
+        }
+
+        public int CalPoints(string[] ops)
+        {
+            var stack = new Stack<int>();
+
+            foreach(var op in ops)
+            {
+                if (op.Equals("+"))
+                {
+                    int top = stack.Pop();
+                    int newtop = top + stack.Peek();
+                    stack.Push(top);
+                    stack.Push(newtop);
+                }
+                else if (op.Equals("C"))
+                {
+                    stack.Pop();
+                }
+                else if (op.Equals("D"))
+                {
+                    stack.Push(2 * stack.Peek());
+                }
+                else
+                {
+                    stack.Push(int.Parse(op));
+                }
+            }
+            return stack.Sum();
+        }
+
+
+        public static IList<string> TopKFrequent(string[] words, int k)
+        {
+
+            return words.GroupBy(x => x).OrderByDescending(x => x.Count()).ThenBy(x => x.Key).Take(k).Select(x => x.Key).ToList();
+
+        }
+        public static ListNode[] SplitListToParts(ListNode root, int k)
+        {
+
+            var cur = root;
+            var count = 0;
+            while (cur != null)
+            {
+                cur = cur.next;
+                count++;
+            }
+
+            int size = count / k;
+            int rem = count % k;
+            cur = root;
+            var ans = new ListNode[k];
+
+            for (int i = 0; i < k; ++i)
+            {
+                var head = cur;
+                for (int j = 0; j < size + (i < rem ? 1 : 0) - 1; ++j)
+                {
+
+                    if (cur != null)
+                    {
+                        cur = cur.next;
+                    }
+                }
+
+                if (cur != null)
+                {
+                    var prev = cur;
+                    cur = cur.next;
+                    prev.next = null;
+                }
+                ans[i] = head;
+
+            }
+            return ans;
+
+        }
+        public static List<Location> locations = new List<Location>();
+        public static IList<IList<int>> VerticalTraversal(TreeNode root)
+        {
+            if (root == null) return null;
+
+            DFS(root, 0, 0);
+            locations.Sort();
+            var ans = new List<IList<int>>();
+           foreach(var item in locations.GroupBy(x=>x.x))
+            {
+                ans.Add(item.Select(x => x.val).ToList());
+
+            }
+            return ans;
+        }
+
+        private static void DFS(TreeNode node, int x, int y)
+        {
+            if (node != null)
+            {
+                locations.Add(new Location(x, y, node.val));
+                DFS(node.left, x - 1, y + 1);
+                DFS(node.right, x + 1, y + 1);
+
+            }
+        }
+
+
+        public class Location:IComparable<Location>
+        {
+            public int x;
+            public int y;
+            public int val;
+            public Location(int x, int y, int val)
+            {
+                this.x = x;
+                this.y = y;
+                this.val = val;
+            }
+
+            public int CompareTo(Location other)
+            {
+                if (x != other.x)
+                {
+                   return x.CompareTo(other.x);
+                }
+                else if(y!=other.y)
+                {
+                    return x.CompareTo(other.y);
+                }
+                else
+                {
+                    return val.CompareTo(other.val);
+                }
+            }
+        }
+
+        public static List<int> PartitionLabels1(string S)
+        {
+            var last = new int[26];
+            for (int i = 0; i < S.Length; i++)
+            {
+                last[S[i] - 'a'] = i;
+            }
+            var ans = new List<int>();
+
+            int j = 0;
+            int anchor = 0;
+
+            for (int i = 0; i < S.Length; i++)
+            {
+                j = Math.Max(j, last[S[i] - 'a']);
+
+                if (i == j)
+                {
+                    ans.Add(i - anchor + 1);
+                    anchor = i + 1;
+                }
+            }
+            return ans;
+        }
+        public static IList<int> PartitionLabels(string S)
+        {
+            if (string.IsNullOrEmpty(S)) return default(List<int>);
+
+            var list = new List<Part>();
+           
+            for (int i = 0; i < S.Length; i++)
+            {
+                var lastIndex = S.LastIndexOf(S[i]);
+                var subString = S.Substring(i, (lastIndex + 1) - i);
+
+                if(list.Any() && list.Any(x=>x.Msg.Contains(S[i])))
+                {
+                    var findItem = list.Where(x => x.Msg.Contains(S[i])).FirstOrDefault();
+                    findItem.Msg = findItem.Msg + subString;
+                }
+                else
+                {
+                    list.Add(new Part() { Msg=subString});
+                }
+                i = lastIndex;
+               
+            }
+
+            var result = new List<int>();
+            
+            foreach(var item in list)
+            {
+                var count = item.Msg.Count();
+                if (count > 1)
+                {
+                    result.Add(count);
+                   
+                }
+                else
+                {
+
+                    var lastItem = result.Last();
+                    lastItem++;
+                }
+                   
+            }
+            return result;
+        }
+
+        public class Part
+        {
+            public string Msg { get; set; }
+        }
+
+        public static int CutOffTree(IList<IList<int>> forest)
+        {
+            if (forest[0][0] == 0) return -1;
+            int rows = forest.Count();
+            int columns = forest[0].Count();
+            var q = new List<int[]>();
+            var dirs = new List<int[]>()
+            {
+                        new int[] {1, 0},
+                        new int[] {-1, 0},
+                        new int[] {0, 1},
+                        new int[] {0, -1}
+            };
+
+            q.Add(new int[] { 0, 0 });
+
+            forest[0][0] = 1;
+            int count = 0;
+            while(true)
+            {
+                var result = new List<int[]>();
+
+                foreach(var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+
+                        var i = item[0] + dir[0];
+                        var j = item[1] + dir[1];
+
+                        if (i >= 0 && i < rows && j < columns && j >= 0 && forest[i][j] > 1)
+                        {
+                            forest[i][j] = 1;
+                            count++;
+                            result.Add(new int[] { i, j });
+                        }
+                    }
+                }
+
+                q = result;
+                if (q.Any() == false) break;
+            }
+
+            return forest.Any(x => x.Any(y => y > 1)) ? -1 : count;
+
+        }
         public int[][] UpdateMatrix(int[][] matrix)
         {
             int rows = matrix.GetLength(0);
@@ -282,6 +591,62 @@ namespace ConsoleApp20
             }
             return new List<List<int>>();
            
+        }
+
+        public static ListNode MergeKLists(ListNode[] lists)
+        {
+            if (lists.Any() == false) return null;
+            var result = new List<int>();
+            foreach(var list in lists)
+            {
+                var temp = list;
+                while(temp != null)
+                {
+                    result.Add(temp.val);
+                    temp = temp.next;
+
+                } 
+            }
+
+            if (result.Any())
+            {
+                result.Sort();
+                var listNode = new ListNode(result[0]);
+                var curr = listNode;
+                for (int i = 1; i < result.Count; i++)
+                {
+
+                    curr.next = new ListNode(result[i]);
+                    curr = curr.next;
+
+                }
+
+                return listNode;
+            }
+            return null;
+           
+
+        }
+        public static IList<int> TopKFrequent(int[] nums, int k)
+        {
+            if (nums.Any() == false) return default(List<int>);
+
+            var dict = new Dictionary<int, int>();
+            foreach (var item in nums)
+            {
+                if (dict.ContainsKey(item))
+                {
+                    dict[item]++;
+                }
+                else
+                {
+                    dict.Add(item, 1);
+                }
+            }
+            return dict.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToList();
+
+           // return nums.GroupBy(x => x).OrderByDescending(x => x.Count()).Take(k).Select(x => x.Key).ToList(); 
+
         }
         public static void Solve(char[][] board)
         {
@@ -1075,13 +1440,113 @@ namespace ConsoleApp20
         }
         //[7,1,5,3,6,4]
         //[1,2,3,4,5]
-        public int MaxProfit(int[] prices)
+        public static int FindPlatform(int[] arr,
+                        int[] dep, int n)
+        {
+
+            var arrival = new List<Train>();
+            var departure = new List<Train>();
+            for (int i = 0; i < n; i++)
+            {
+                arrival.Add(new Train() { Name = "Arrival", Time = arr[i] });
+                departure.Add(new Train() { Name = "Departure", Time = dep[i] });
+            }
+
+            arrival = arrival.Union(departure).ToList();
+            arrival.Sort();
+
+            int platFormCount = 0;
+            int max = 0;
+            foreach(var item in arrival)
+            {
+                if(item.Name=="Arrival")
+                {
+                    platFormCount += 1;
+                }
+                else
+                {
+                    platFormCount -= 1;
+                }
+                max = Math.Max(max, platFormCount);
+            }
+            return max; 
+        }
+        public class Train: IComparable<Train>
+        {
+            public string Name { get; set; }
+            public int Time { get; set; }
+
+            public int CompareTo(Train other)
+            {
+                return Time.CompareTo(other.Time);
+            }
+        }
+        public static int MaxProfitMost2Tras(int[] prices)
+        {
+
+            if (prices == null || prices.Length == 0)
+                return 0;
+
+            // find the max profit can get until this node (include this node)
+            int[] dp1 = new int[prices.Length];
+            dp1[0] = 0;
+            int curMin = prices[0];
+            for (int i = 1; i < prices.Length; i++)
+            {
+                dp1[i] = Math.Max(dp1[i - 1], prices[i] - curMin);
+                curMin = Math.Min(curMin, prices[i]);
+            }
+
+            // then find from the end, figure out the max profit can get (include this index)
+            int[] dp2 = new int[prices.Length];
+            int curMax = prices[prices.Length - 1];
+
+            for (int i = prices.Length - 1; i >= 0; i--)
+            {
+                dp2[i] = Math.Max(dp2[i], curMax - prices[i]);
+                curMax = Math.Max(curMax, prices[i]);
+            }
+
+            int max = 0;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                // try single 
+                max = Math.Max(max, dp1[i]);
+                max = Math.Max(max, dp2[i]);
+
+                // try out the combination
+                if (i < prices.Length - 1)
+                    max = Math.Max(max, dp1[i] + dp2[i + 1]);
+
+            }
+
+            return max;
+        }
+        
+        public static int MaxProfitWithCoolTime(int[] prices)
+        {
+            if (prices.Length <= 1) return 0;
+
+            int s0 = 0;
+            int s1 = -prices[0];
+            int s2 = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                s1 = Math.Max(s1, s0 - prices[i]);
+                s0 = Math.Max(s0, s2);
+                s2 = s1 + prices[i];
+            }
+            return Math.Max(s2, s0);
+        }
+
+        public static int MaxProfit(int[] prices)
         {
             var max = 0;
             var min = prices[0];
             for (int i = 1; i < prices.Length; i++)
             {
-                if (min < prices[i])
+                if (min > prices[i])
                 {
                     min = prices[i];
                 }
