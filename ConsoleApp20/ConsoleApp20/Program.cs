@@ -10,6 +10,125 @@ namespace ConsoleApp20
     {
         static void Main(string[] args)
         {
+            var mergeValues = new int[][]
+            {
+                new int[]  {1,3},
+                new int[]  {2,6},
+                new int[]  {8,10},
+                new int[]  {15,18},
+
+
+              };
+
+            var mergeResult = Merge(mergeValues);
+
+            var value1 = new int[][]
+                   {
+                            new int[]  {0,2},
+                            new int[]  {5,10},
+                            new int[]  {13,23},
+                            new int[]  {24,25},
+
+
+                   };
+            var value2 = new int[][]
+                  {
+                            new int[]  {1,5},
+                            new int[]  {8,12},
+                            new int[]  {15,24},
+                            new int[]  {25,26},
+
+
+                  };
+            var intervalIntersection = IntervalIntersection(value1, value2);
+
+         
+
+            var mostcommanWord = MostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit.", new string[] { "hit" });
+            var board = new char[][]
+           {
+                new char[]  {'o','a','a','n'},
+                new char[]  {'e','t','a','e'},
+                new char[]  {'i','h','k','r'},
+                new char[]  {'i','f','l','v'},
+
+           };
+
+           var board1 = new char[][]
+           {
+                new char[]  {'a','a'},
+              
+
+           };
+            var foundWord1 = FindWords(board1, "a");
+
+            var foundWords = FindWordsWithTrie(board, new string[] { "oath", "pea", "eat", "rain" });
+          
+
+            // ["WordDictionary","addWord","addWord","addWord","addWord","search","search","addWord","search","search","search","search","search","search"]
+            //       [[],["at"],["and"],["an"],["add"],              ["a"],[".at"],["bat"],
+
+            // [".at"],["an."],["a.d."],["b."],["a.d"],["."]]
+
+            // Expected [null,null,null,null,null,false,false,null,true,true,false,false,true,false]
+            // outcome  [null,null,null,null,null,false,false,null,false,true,false,false,false,false]
+
+            bool trieResult = false;
+
+            Trie trie = new Trie();
+            {
+                trie.Insert("at");
+                trie.Insert("and");
+                trie.Insert("an");
+                trie.Insert("add");
+                trieResult = trie.Search1("a");
+                trieResult = trie.Search1(".at");
+                trie.Insert("bat");
+                trieResult = trie.Search1(".at");
+                trieResult = trie.Search1("an.");
+                trieResult = trie.Search1("a.d.");
+                trieResult = trie.Search1("b.");
+                trieResult = trie.Search1("a.d");
+                trieResult = trie.Search1(".");
+
+
+                
+            }
+
+
+            var orangesRottingArray = new int[][]
+            {
+                new int[]{2,1,1},
+                new int[]{1,1,0},
+                new int[]{0,1,1},
+
+            };
+            var orangeRes = OrangesRotting(orangesRottingArray);
+
+
+           
+
+            Merge(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
+            TreeNode root = null;
+            AddNewNode(ref root, 3);
+            AddNewNode(ref root, 9);
+            AddNewNode(ref root, 20);
+            AddNewNode(ref root, 1);
+            AddNewNode(ref root, 45);
+            AddNewNode(ref root, 15);
+            AddNewNode(ref root, 7);
+
+            var isBalance = IsBalanced(root);
+            var rob2 = Rob2(new int[] { 1, 2, 3, 2, 4, 6, 7 });
+            var rob = Rob(new int[] { 2, 7, 9, 3, 1 });
+
+            var isHappy = IsHappy(19);
+            var countPrime = CountPrimes(10);
+
+            var coolTime = MaxProfitWithCool(new int[] { 1, 2, 3, 0, 2 });
+
+            var maxWith2Trans = MyMaxProfit2Tr(new int[] { 3, 3, 5, 0, 0, 3, 1, 4 });
+
             var cutTrees = new List<IList<int>>
             {
                 new List<int>{54581641,64080174,24346381,69107959},
@@ -31,14 +150,7 @@ namespace ConsoleApp20
             }
 
             SplitListToParts(linkedListRoot, 5);
-            TreeNode root = null;
-            AddNewNode(ref root, 3);
-            AddNewNode(ref root, 9);
-            AddNewNode(ref root, 20);
-            AddNewNode(ref root, 1);
-            AddNewNode(ref root, 45);
-            AddNewNode(ref root, 15);
-            AddNewNode(ref root, 7);
+          
 
            var verticalTraversal= VerticalTraversal(root);
 
@@ -49,7 +161,7 @@ namespace ConsoleApp20
 
             var platForm = FindPlatform(arrivalTime, departureTime, arrivalTime.Length);
 
-            var maxWith2Trans = MaxProfitMost2Tras(new int[] { 3, 3, 5, 0, 0, 3, 1, 4 });
+           
             var maxprwithCoolTime = MaxProfitWithCoolTime(new int[] { 1, 2, 3, 0, 2 });
 
             var maxpr = MaxProfit(new int[] { 7, 1, 5, 3, 6, 4 });
@@ -185,7 +297,7 @@ namespace ConsoleApp20
             var possible = new List<string> { "storage", "battery", "hover", "alex", "waterproof", "solar" };
             var r45 = new List<string> { "i am sharath battery", "manikanda alex", "bharath battery", "jda alex", "waterproof good" };
             var popular = popularNFeatures(6, 2, possible, 7, r45);
-            var countPrime = CountPrimes(10);
+          
             var reverseBits = ReverseBits(43261596);
             Rotate(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 3);
             var fact = TrailingZeroes(7);
@@ -239,6 +351,158 @@ namespace ConsoleApp20
             }
         }
 
+
+        public static string MostCommonWord(string paragraph, string[] banned)
+        {
+
+            return System.Text.RegularExpressions.Regex.Replace(paragraph, @"[^0-9A-Za-z]+", " ")
+                .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).GroupBy(x => x, StringComparer.InvariantCultureIgnoreCase)
+                .OrderByDescending(x => x.Count())
+                .Where(x => banned.Contains(x.Key, StringComparer.InvariantCultureIgnoreCase) == false)
+                .Select(x => x.Key.ToLower()).FirstOrDefault();
+
+
+        }
+        public static int[][] IntervalIntersection(int[][] A, int[][] B)
+        {
+
+            if (A.Length == 0 || B.Length == 0) return default(int[][]);
+
+            int i = 0, j = 0;
+            var ans = new List<int[]>();
+            while (i < A.Length && j < B.Length)
+            {
+                var startMax = Math.Max(A[i][0], B[i][0]);
+                var endMin = Math.Min(A[i][1], B[i][1]);
+
+                if (endMin >= startMax)
+                {
+                    ans.Add(new int[] { startMax, endMin });
+
+                }
+
+                if (A[i][1] == endMin) i++;
+                if (B[i][1] == endMin) j++;
+
+
+            }
+
+            return ans.ToArray();
+
+        }
+        public static int[][] Merge(int[][] intervals)
+        {
+            if (intervals.Length <= 1) return intervals;
+
+            Array.Sort(intervals, (s1, s2) => s1[0].CompareTo(s2[0]));
+
+           var result = new List<int[]>();
+
+            var newInterval = intervals[0];
+
+            result.Add(newInterval);
+
+            foreach(var interval in intervals)
+            {
+                if (interval[0] <= newInterval[1])
+                {
+                    newInterval[1] = Math.Max(interval[1], newInterval[1]);
+
+                }
+                else
+                {
+                    newInterval = interval;
+                    result.Add(newInterval);
+                }
+
+            }
+           
+
+            return result.ToArray();
+
+        }
+
+        public static int OrangesRotting(int[][] grid)
+        {
+
+            int rows = grid.Length;
+            int columns = grid[0].Length;
+
+            var q = new List<int[]>();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (grid[i][j] == 2)
+                    {
+                        q.Add(new int[] { i, j });
+                    }
+                }
+            }
+
+           
+            var dirs = new List<int[]>() { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int count = 0;
+            while (true)
+            {
+                var result = new List<int[]>();
+                foreach (var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+                        var i = item[0] + dir[0];
+                        var j = item[1] + dir[1];
+
+                        if (i >= 0 && i < rows && j >= 0 && j < columns && grid[i][j] == 1)
+                        {
+                            grid[i][j] = 2;
+                           
+                            result.Add(new int[] { i, j });
+
+                        }
+                    }
+                   
+                }
+               
+                q = result;
+                if (q.Any() == false) break;
+                count += 1;
+            }
+
+            return count;
+        }
+        public static int Rob2(int[] nums)
+        {
+            if (nums.Length == 1) return nums[0];
+            return Math.Max(Rob(nums, 0, nums.Length - 2), Rob(nums, 1, nums.Length - 1));
+        }
+        public static int Rob(int[] num, int lo, int hi)
+        {
+            int include = 0, exclude = 0;
+            for (int j = lo; j <= hi; j++)
+            {
+                int i = include, e = exclude;
+                include = e + num[j];
+                exclude = Math.Max(e, i);
+            }
+            return Math.Max(include, exclude);
+        }
+
+        public static int Rob(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return nums[0];
+            if (nums.Length == 2) return Math.Max(nums[0], nums[1]);
+
+            var db = new int[nums.Length];
+            db[0] = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                var item = i - 2 >= 0 ? db[i - 2] : 0;
+                db[i] = Math.Max(nums[i] + item, db[i - 1]);
+            }
+            return db[nums.Length - 1];
+        }
         public static void AddNodes(ListNode root, int val)
         {
             if (root == null)
@@ -341,6 +605,7 @@ namespace ConsoleApp20
             DFS(root, 0, 0);
             locations.Sort();
             var ans = new List<IList<int>>();
+
            foreach(var item in locations.GroupBy(x=>x.x))
             {
                 ans.Add(item.Select(x => x.val).ToList());
@@ -467,9 +732,13 @@ namespace ConsoleApp20
         public static int CutOffTree(IList<IList<int>> forest)
         {
             if (forest[0][0] == 0) return -1;
+
             int rows = forest.Count();
+
             int columns = forest[0].Count();
+
             var q = new List<int[]>();
+
             var dirs = new List<int[]>()
             {
                         new int[] {1, 0},
@@ -513,9 +782,13 @@ namespace ConsoleApp20
         public int[][] UpdateMatrix(int[][] matrix)
         {
             int rows = matrix.GetLength(0);
+
             int columns = matrix[0].GetLength(0);
+
             bool[,] visited = new bool[rows, columns];
+
             var q = new List<int[]>();
+
             var dirs = new List<int[]>()
                     {
                         new int[] {1, 0},
@@ -535,6 +808,7 @@ namespace ConsoleApp20
                     }
                 }
             }
+
             while (true)
             {
                 var result = new List<int[]>();
@@ -543,7 +817,8 @@ namespace ConsoleApp20
                     foreach (var dir in dirs)
                     {
                         int i = item[0] + dir[0];
-                        int j = item[1]+ dir[1];
+                        int j = item[1] + dir[1];
+
                         if (i < 0 || i >= rows || j < 0 || j >= columns || visited[i, j])
                         {
                             continue;
@@ -554,6 +829,7 @@ namespace ConsoleApp20
                     }
                 }
                 q = result;
+
                 if (q.Any() == false) break;
             }
 
@@ -592,8 +868,8 @@ namespace ConsoleApp20
             return new List<List<int>>();
            
         }
-
-        public static ListNode MergeKLists(ListNode[] lists)
+      
+    public static ListNode MergeKLists(ListNode[] lists)
         {
             if (lists.Any() == false) return null;
             var result = new List<int>();
@@ -689,9 +965,9 @@ namespace ConsoleApp20
                 {
                     if (grid[i][j] == '1')
                     {
-                      
-                       
-                         DFS(grid, rows, columns, i, j);
+
+
+                        DFS(grid, rows, columns, i, j);
                         res += 1;
                     }
                 }
@@ -699,6 +975,17 @@ namespace ConsoleApp20
 
             return res;
            
+        }
+        public string ReverseWords1(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            return string.Join("",s.Trim().Split(" ".ToArray(),StringSplitOptions.RemoveEmptyEntries).Reverse());
+
+           
+
+
+
         }
         private static void DFS(char[][] grid, int m, int n, int i, int j)
         {
@@ -752,6 +1039,87 @@ namespace ConsoleApp20
             return time;
         }
 
+        public static bool FindWords(char[][] board, string word)
+        {
+            int rows = board.Length;
+            int columns = board[0].Length;
+
+            var q = new List<int[]>();
+
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (board[i][j] == word[0])
+                    {
+                        q.Add(new int[] { i, j });
+                    }
+                }
+
+            }
+
+            var dirs = new List<int[]>() { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int k = 1;
+            var ans = new List<string>();
+
+
+            while (true)
+            {
+                var result = new List<int[]>();
+
+                foreach (var item in q)
+                {
+                    foreach (var dir in dirs)
+                    {
+                        var i = item[0] + dir[0];
+                        var j = item[1] + dir[1];
+
+                        if (i >= 0 && i < rows && j >= 0 && j < columns && k < word.Length && board[i][j] == word[k])
+                        {
+                           
+                            result.Add(new int[] { i, j });
+
+                        }
+                    }
+                }
+              
+                q = result;
+                if (q.Any() == false) break;
+                if (k == word.Length)
+                {
+                    return true;
+                }
+                k++;
+            }
+
+            return k == word.Length;
+        }
+
+        public bool Exist(char[][] board, string word)
+        {
+            for (int i = 0; i < board.Length; i++)
+                for (int j = 0; j < board[0].Length; j++)
+                {
+                    if (Exist(board, i, j, word, 0))
+                        return true;
+                }
+            return false;
+        }
+        private bool Exist(char[][] board, int i, int j, string word, int ind)
+        {
+            if (ind == word.Length) return true;
+            if (i > board.Length - 1 || i < 0 || j < 0 || j > board[0].Length - 1 || board[i][j] != word[ind])
+                return false;
+            board[i][j] = '*';
+            var result = Exist(board, i - 1, j, word, ind + 1) ||
+                                Exist(board, i, j - 1, word, ind + 1) ||
+                                Exist(board, i, j + 1, word, ind + 1) ||
+                                Exist(board, i + 1, j, word, ind + 1);
+
+            board[i][j] = word[ind];
+            return result;
+        }
 
         public static int TreasureIsland2(char[][] island)
         {
@@ -760,11 +1128,11 @@ namespace ConsoleApp20
 
             var q = new List<int[]>();
 
-            for(int i=0;i<rows;i++)
+            for (int i = 0; i < rows; i++)
             {
-                for(int j=0;j<columns;j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    if(island[i][j]=='S')
+                    if (island[i][j] == 'S')
                     {
                         q.Add(new int[] { i, j });
                         island[i][j] = 'D';
@@ -781,20 +1149,20 @@ namespace ConsoleApp20
                 {
                     foreach (var dir in dirs)
                     {
-                        var m = item[0] + dir[0];
-                        var n = item[1] + dir[1];
+                        var i = item[0] + dir[0];
+                        var j = item[1] + dir[1];
 
-                        if (0 <= m && m < columns && 0 <= n && n < rows)
+                        if (0 <= i && i < columns && 0 <= j && j < rows)
                         {
-                            if (island[m][n] == 'X')
+                            if (island[i][j] == 'X')
                             {
                                 time += 1;
                                 return time;
                             }
-                            if (island[m][n] != 'D')
+                            if (island[i][j] != 'D')
                             {
-                                island[m][n] = 'D';
-                                result.Add(new int[] { m, n });
+                                island[i][j] = 'D';
+                                result.Add(new int[] { i, j });
                             }
                         }
 
@@ -847,6 +1215,7 @@ namespace ConsoleApp20
                         }
 
                     }
+                  
                   
                 }
 
@@ -1052,6 +1421,7 @@ namespace ConsoleApp20
             if (string.IsNullOrEmpty(searchWord) || products.Any() == false) return new List<IList<string>>();
 
             Array.Sort(products);
+
             var result = new List<IList<string>>();
             for (int i = 0; i < searchWord.Length; i++)
             {
@@ -1259,6 +1629,20 @@ namespace ConsoleApp20
                 }
             }
             return default(int[]);
+        }
+        public string[] ReorderLogFiles1(string[] logs)
+        {
+
+
+            var onlyLetters = logs.Where(x => !x.Split(' ')[1].All(char.IsDigit)).OrderBy(x => x.Substring(x.IndexOf(' ') + 1)).ThenBy(x => x.Substring(0, x.IndexOf(' ')));
+            var onlyDigit = logs.Where(x => x.Split(' ')[1].All(char.IsDigit));
+
+            return onlyLetters.Union(onlyDigit).ToArray();
+                
+
+
+
+
         }
         public string[] FindRestaurant(string[] list1, string[] list2)
         {
@@ -1481,47 +1865,43 @@ namespace ConsoleApp20
                 return Time.CompareTo(other.Time);
             }
         }
-        public static int MaxProfitMost2Tras(int[] prices)
+        public static int MaxProfitWithCool(int[] prices)
         {
+            if (prices.Length <= 1) return 0;
 
-            if (prices == null || prices.Length == 0)
-                return 0;
+            int prev_rest = 0;
+            int prev_sell = 0;
+            int prev_buy = -prices[0];
 
-            // find the max profit can get until this node (include this node)
-            int[] dp1 = new int[prices.Length];
-            dp1[0] = 0;
-            int curMin = prices[0];
-            for (int i = 1; i < prices.Length; i++)
+            foreach (var p in prices)
             {
-                dp1[i] = Math.Max(dp1[i - 1], prices[i] - curMin);
-                curMin = Math.Min(curMin, prices[i]);
+                var buy = Math.Max(prev_rest - p, prev_buy);
+                var sell = Math.Max(prev_buy + p, prev_sell);
+                prev_buy = buy;
+                prev_rest = prev_sell;
+                prev_sell = sell;
             }
 
-            // then find from the end, figure out the max profit can get (include this index)
-            int[] dp2 = new int[prices.Length];
-            int curMax = prices[prices.Length - 1];
+            return Math.Max(prev_rest, prev_sell);
 
-            for (int i = prices.Length - 1; i >= 0; i--)
-            {
-                dp2[i] = Math.Max(dp2[i], curMax - prices[i]);
-                curMax = Math.Max(curMax, prices[i]);
-            }
-
-            int max = 0;
-            for (int i = 0; i < prices.Length; i++)
-            {
-                // try single 
-                max = Math.Max(max, dp1[i]);
-                max = Math.Max(max, dp2[i]);
-
-                // try out the combination
-                if (i < prices.Length - 1)
-                    max = Math.Max(max, dp1[i] + dp2[i + 1]);
-
-            }
-
-            return max;
         }
+
+        public static int MyMaxProfit2Tr(int[] prices)
+        {
+            int buyOne = int.MaxValue;
+            int ProfitOne = 0;               // Profit gained after selling 1st share.
+            int buyTwo = int.MaxValue;
+            int ProfitTwo = 0;               // Profit gained after selling 2nd share.
+            foreach (var p in prices)
+            {
+                buyOne = Math.Min(buyOne, p);
+                ProfitOne = Math.Max(ProfitOne, p - buyOne);
+                buyTwo = Math.Min(buyTwo, p - ProfitOne);     // If I made $100 profit in 1st trans'. Then the 2nd Stock(maybe $300) I buy is actually $300 - $100 = $200 for me. 
+                ProfitTwo = Math.Max(ProfitTwo, p - buyTwo);   // And finally The maximum profit I make with the 2nd trans' is my actuall profit with 2 transaction. 
+            }
+            return ProfitTwo;
+        }
+       
         
         public static int MaxProfitWithCoolTime(int[] prices)
         {
@@ -1820,7 +2200,7 @@ namespace ConsoleApp20
             return dep + 1;
         }
 
-        public bool IsBalanced(TreeNode root)
+        public static bool IsBalanced(TreeNode root)
         {
             if (root == null)
             {
@@ -1831,7 +2211,7 @@ namespace ConsoleApp20
             if (Math.Abs(left - right) > 1) return false;
             return IsBalanced(root.left) && IsBalanced(root.right);
         }
-        public int BalancedTree(TreeNode root)
+        public static int BalancedTree(TreeNode root)
         {
             if (root == null)
             {
@@ -1873,6 +2253,8 @@ namespace ConsoleApp20
             root.left = SortedArrayToBST(nums.Take(nums.Length / 2).ToArray());
             root.right = SortedArrayToBST(nums.Skip((nums.Length / 2) + 1).Take(nums.Length).ToArray());
             return root;
+
+          
         }
         public TreeNode SortedListToBSTMethod2(ListNode head)
         {
@@ -1992,6 +2374,73 @@ namespace ConsoleApp20
             return r;
 
         }
+
+        public ListNode SortList(ListNode head)
+        {
+            if (head == null || head.next == null) return head;
+
+            ListNode prev = null;
+            ListNode slow = head;
+            ListNode fast = head;
+
+            while (fast != null && fast.next != null)
+            {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            prev.next = null;
+
+            var firstHalf = SortList(head);
+            var secondHalf = SortList(slow);
+            return MergeLinkedList(firstHalf, secondHalf);
+        }
+
+        ListNode MergeLinkedList(ListNode firstHalf, ListNode secondHalf)
+        {
+            var resNode = new ListNode(0);
+            var mergeNode = resNode;
+
+            while (firstHalf != null && secondHalf != null)
+            {
+                if (firstHalf.val < secondHalf.val)
+                {
+                    mergeNode.next = firstHalf;
+                    firstHalf = firstHalf.next;
+                }
+                else
+                {
+                    mergeNode.next = secondHalf;
+                    secondHalf = secondHalf.next;
+                }
+                mergeNode = mergeNode.next;
+            }
+
+            if (firstHalf != null)
+                mergeNode.next = firstHalf;
+
+            if (secondHalf != null)
+                mergeNode.next = secondHalf;
+
+            return resNode.next;
+        }
+
+    
+    public static void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            int i = m - 1;
+            int j = n - 1;
+            int k = m + n - 1;
+            while (i >= 0 && j >= 0)
+            {
+                if (nums1[i] > nums2[j])
+                    nums1[k--] = nums1[i--];
+                else
+                    nums1[k--] = nums2[j--];
+            }
+            while (j >= 0)
+                nums1[k--] = nums2[j--];
+        }
         public bool IsSymmetric(TreeNode root)
         {
             return IsMirror(root, root);
@@ -2053,6 +2502,7 @@ namespace ConsoleApp20
             return q1.Any() == false && q1.Any() == false ? true : false;
 
         }
+
         public static string AddBinary(string a, string b)
         {
             if (string.IsNullOrEmpty(a)) return b;
@@ -2077,7 +2527,7 @@ namespace ConsoleApp20
             }
             return result[n];
         }
-        public static void Merge(int[] nums1, int m, int[] nums2, int n)
+        public static void Merge1(int[] nums1, int m, int[] nums2, int n)
         {
             for (int i = 0; i < n; i++)
             {
@@ -2205,6 +2655,39 @@ namespace ConsoleApp20
 
             return stack.Any() ? false : true;
         }
+        public static  bool IsHappy(int n)
+        {
+            if (n == 0) return false;
+            if (n == 1) return true;
+            var square = 0;
+            var list = new List<int>();
+            while (n != 0)
+            {
+                var rem = n % 10;
+                square += rem * rem;
+                n = n / 10;
+                if (n == 0)
+                {
+                    if (square == 1)
+                    {
+                        return true;
+                    }
+
+                    if (list.Contains(square))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        list.Add(square);
+                    }
+                    n = square;
+                    square = 0;
+                }
+
+            }
+            return true;
+        }
         public static int CountPrimes(int n)
         {
             bool[] isPrime = new bool[n];
@@ -2268,7 +2751,9 @@ namespace ConsoleApp20
         public bool IsIsomorphic(string s, string t)
         {
             if (s.Length != t.Length) return false;
+
             var dict = new Dictionary<char, char>();
+
             for (int i = 0; i < s.Length; i++)
             {
                 if (dict.ContainsKey(s[i]))
@@ -2444,6 +2929,36 @@ namespace ConsoleApp20
             return unique;
 
         }
+        public bool isSubtree(TreeNode s, TreeNode t)
+        {
+            if (s == null) return false;
+            if (isSame(s, t)) return true;
+            return isSubtree(s.left, t) || isSubtree(s.right, t);
+        }
+
+        private bool isSame(TreeNode s, TreeNode t)
+        {
+            if (s == null && t == null) return true;
+            if (s == null || t == null) return false;
+
+            if (s.val != t.val) return false;
+
+            return isSame(s.left, t.left) && isSame(s.right, t.right);
+        }
+        public TreeNode InvertTree(TreeNode root)
+        {
+
+            if (root == null) return null;
+
+            var right = InvertTree(root.right);
+            var left = InvertTree(root.left);
+
+            root.left = right;
+            root.right = left;
+
+            return root;
+
+        }
         public static int SearchInsert(int[] nums, int target)
         {
             int i = 0;
@@ -2485,6 +3000,232 @@ namespace ConsoleApp20
             public TreeNode right;
             public TreeNode(int x) { val = x; }
         }
+
+
+        public static List<string> FindWordsWithTrie(char[][] board, string[] words)
+        {
+            var res = new List<string>();
+            var trie = new Trie();
+
+            foreach (var word in words)
+            {
+                trie.Insert(word);
+            }
+
+            for (int i = 0; i < board.Length; i++)
+            {
+                for (int j = 0; j < board[0].Length; j++)
+                {
+                    DFSFindWord(board, i, j, trie.root, res);
+                }
+            }
+            return res;
+        }
+
+        private static void DFSFindWord(char[][] board, int i, int j, Trie.TrieNode root, List<string> res)
+        {
+            char ch = board[i][j];
+
+            if (ch == '#' || root.children.ContainsKey(ch) == false) return;
+
+            root.children.TryGetValue(ch, out Trie.TrieNode node);
+
+            root = node;
+
+            if (root.word != null)
+            {
+                res.Add(root.word);
+                root.word = null;
+            }
+
+            board[i][j] = '#';
+            if (i > 0) DFSFindWord(board, i - 1, j, root, res);
+            if (j > 0) DFSFindWord(board, i, j - 1, root, res);
+            if (i < board.Length - 1) DFSFindWord(board, i + 1, j, root, res);
+            if (j < board[0].Length - 1) DFSFindWord(board, i, j + 1, root, res);
+            board[i][j] = ch;
+        }
+
+        public class Trie
+        {
+            public TrieNode root;
+            public class TrieNode
+            {
+                public Dictionary<char, TrieNode> children;
+                public bool endOfWord;
+                public string word;
+                public TrieNode()
+                {
+                    children = new Dictionary<char, TrieNode>();
+                    endOfWord = false;
+                }
+            }
+            public Trie()
+            {
+                root = new TrieNode();
+            }
+            public void Insert(string word)
+            {
+                TrieNode current = root;
+                for (int i = 0; i < word.Length; i++)
+                {
+                    char ch = word[i];
+
+                    if (current.children.TryGetValue(ch, out TrieNode node) == false)
+                    {
+                        node = new TrieNode();
+                        current.children.Add(ch, node);
+                    }
+                    current = node;
+                }
+                current.endOfWord = true;
+                current.word = word;
+            }
+
+            public void InsertRecursive(string word)
+            {
+                InsertRecursive(root, word, 0);
+            }
+
+            private void InsertRecursive(TrieNode current, string word, int index)
+            {
+                if (index == word.Length)
+                {
+                    current.endOfWord = true;
+                    return;
+                }
+
+                char ch = word[index];
+                if (current.children.TryGetValue(ch, out TrieNode node) == false)
+                {
+                    node = new TrieNode();
+                    current.children.Add(ch, node);
+                }
+                InsertRecursive(node, word, index + 1);
+            }
+            public bool Search(string word)
+            {
+                TrieNode current = root;
+                for (int i = 0; i < word.Length; i++)
+                {
+                    char ch = word[i];
+
+                    if (current.children.TryGetValue(ch, out TrieNode node) == false)
+                    {
+                        return false;
+                    }
+                    current = node;
+                }
+                return current.endOfWord;
+            }
+
+            public bool Search1(string word)
+            {
+                TrieNode current = root;
+                for (int i = 0; i < word.Length; i++)
+                {
+                    char ch = word[i];
+                    TrieNode node = null;
+                    if (ch == '.')
+                    {
+                       node = current.children.Select(x => x.Value).FirstOrDefault();
+                    }
+                    else if (current.children.TryGetValue(ch, out node) == false)
+                    {
+                        return false;
+                    }
+                    current = node;
+                }
+                return current.endOfWord;
+            }
+
+            public bool Search2(string word)
+            {
+                return Match(word.ToCharArray(), 0, root);
+            }
+
+            private bool Match(char[] chs, int k, TrieNode node)
+            {
+                if (k == chs.Length) return node.endOfWord;
+
+                if (chs[k] == '.')
+                {
+                    foreach (var item in node.children)
+                    {
+                        if (item.Value != null)
+                        {
+                            if (Match(chs, k + 1, item.Value))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return node.children.TryGetValue(chs[k], out TrieNode value) && Match(chs, k + 1, value);
+
+                }
+                return false;
+            }
+
+
+            public bool SearchRecursive(string word)
+            {
+                return SearchRecursive(root, word, 0);
+            }
+
+            private bool SearchRecursive(TrieNode current, string word, int index)
+            {
+                if (index == word.Length)
+                {
+
+                    return current.endOfWord;
+                }
+
+                char ch = word[index];
+             
+                if (current.children.TryGetValue(ch, out TrieNode node) == false)
+                {
+                    return false;
+                }
+                return SearchRecursive(node, word, index + 1);
+            }
+
+            public void Delete(string word)
+            {
+                Delete(root, word, 0);
+            }
+            private bool Delete(TrieNode current, string word, int index)
+            {
+                if (index == word.Length)
+                {
+                    if (!current.endOfWord)
+                    {
+                        return false;
+                    }
+                    current.endOfWord = false;
+                    return current.children.Count() == 0;
+                }
+
+                char ch = word[index];
+           
+                if (current.children.TryGetValue(ch, out TrieNode node) == false)
+                {
+                    return false;
+                }
+
+                bool shouldDeleteCurrentNode = Delete(node, word, index + 1);
+
+                if (shouldDeleteCurrentNode)
+                {
+                    current.children.Remove(ch);
+                    return current.children.Count() == 0;
+                }
+                return false;
+            }
+        }
+
         public class Solution
         {
             public ListNode MergeTwoLists(ListNode l1, ListNode l2)
